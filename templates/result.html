@@ -3,11 +3,29 @@
 <body>
 {% block content %}
     <div class="card-columns">
+
+        <!-- Conversation duration -->
         <div class="card">
             <p>{{ duration[0] }} - {{ duration[1] }}</p>
         </div>
+
+        <!-- Total number of messages -->
         <div class="card">
-            <p>{{ duration[0] }} - {{ duration[1] }}</p>
+            <p>
+                <span>Total: {{ num_messages[0] }}</span>
+                <span>By me: {{ num_messages[1] }}</span>
+                <span>By them: {{ num_messages[2] }}</span>
+            </p>
+        </div>
+
+        <!-- Most active day -->
+        <div class="card">
+            <p>
+                <span>Day: {{ most_active_day[0] }}</span>
+                <span>Num sent: {{ most_active_day[1] }}</span>
+                <span>By me: {{ most_active_day[2] }}</span>
+                <span>By them: {{ most_active_day[3] }}</span>
+            </p>
         </div>
 
     </div>

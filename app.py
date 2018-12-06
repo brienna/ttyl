@@ -52,19 +52,42 @@ def get_messages():
     df_msg['new_hours'] = [d.hour for d in df_msg['time']]
 
     # Get dates of conversation duration
-    duration = get_conversation_length(df_msg)
+    duration = get_duration(df_msg)
+    # Get total number of messages sent
+    num_messages = get_num_messages(df_msg)
+    # Get most active day and activity on that day
+    most_active_day = get_most_active_day(df_msg)
 
-    return render_template('result.html', duration=duration)
+    return render_template('result.html', 
+        duration=duration, 
+        num_messages=num_messages,
+        most_active_day=most_active_day)
 
 
 # Functions
 
-def get_conversation_length(df_msg):
+def get_duration(df_msg):
     start = df_msg['new_date'].iloc[0]
-    start = start.strftime('%m.%d.%Y')
     end = df_msg['new_date'].iloc[-1]
-    end = end.strftime('%m.%d.%Y')
-    return [start, end]
+    return [start.strftime('%m.%d.%Y'), end.strftime('%m.%d.%Y')]
+
+def get_num_messages(df_msg):
+    '''
+    Returns [total, me, other person]
+    '''
+    total = len(df_msg)
+    by_me = len(df_msg[df_msg['is_from_me'] == 1])
+    by_them = total - by_me
+    return [str(total), str(by_me), str(by_them)]
+
+def get_most_active_day(df_msg):
+    # LATER: Account for more than 1 day in the mode
+    day = df_msg['new_date'].mode()[0]
+    df_temp = df_msg[df_msg['new_date'] == day]
+    num_msgs = len(df_temp)
+    num_msgs_me = len(df_temp[df_temp['is_from_me'] == 1])
+    num_msgs_them = num_msgs - num_msgs_me
+    return [day.strftime('%m.%d.%Y'), num_msgs, num_msgs_me, num_msgs_them]
 
 
 if __name__ == '__main__':

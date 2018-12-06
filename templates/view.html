@@ -2,11 +2,15 @@
 <!doctype HTML>
 <head>
     <title>we text a lot</title>
+    <!-- Bootstrap 4 -->
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <!-- Custom styling -->
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
 </head>
 
 <body>
+    {% block content %}
     <div class=page>
       <h1>Choose </h1>
       {% for table in tables %}
@@ -20,4 +24,5 @@
         <input style="display: none" name="selected_handles">
         <input type="SUBMIT" value="get messages">
     </form>
+    {% endblock content %}
 </body>

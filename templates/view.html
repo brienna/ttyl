@@ -11,18 +11,29 @@
 
 <body>
     {% block content %}
-    <div class=page>
-      <h1>Choose </h1>
-      {% for table in tables %}
-        {{ table|safe }}
-      {% endfor %}
+    
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="handles-parent">
+                    <!-- Handles -->
+                    {% for table in tables %}
+                    {{ table|safe }}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <form id="handlesForm" action='{{ url_for("get_messages") }}' method="POST">
+                    <!-- Show user which rows they have chosen -->
+                    <!--hidden input which will note handle ids for back end-->
+                    <ul id="selectedContactsList"></ul>
+                    <input style="display: none" name="selected_handles">
+                    <input class="btn" type="SUBMIT" value="get messages">
+                </form>
+            </div>
+        </div>
     </div>
 
-    <form action='{{ url_for("get_messages") }}' method="POST">
-        <!-- Show user which rows they have chosen -->
-        <!--hidden input which will note handle ids for back end-->
-        <input style="display: none" name="selected_handles">
-        <input type="SUBMIT" value="get messages">
-    </form>
+    
     {% endblock content %}
 </body>

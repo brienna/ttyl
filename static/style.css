@@ -1,13 +1,65 @@
 
-body            { font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;}
-a, h1, h2       { color: #377ba8; }
-h1, h2          { margin: 0; }
-h1              { border-bottom: 2px solid #eee; }
-h2              { font-size: 1.2em; }
+body { 
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    background-color: #262626;
+}
+
+a, h1, h2 { 
+    color: #595959;
+}
+
+h1, h2 { 
+    margin: 0; 
+}
+
+h2 { 
+    font-size: 1.2em; 
+}
 
 tr:hover { 
-    background-color: #ffff99;
+    background-color: #FFFE7B;
     cursor: pointer;
+    color: #262626;
+}
+
+tr.selected {
+    background-color: #DE614B;
+    color: #262626;
+}
+
+.handles {
+    color: rgba(203,203,203,.3);
+    background-color: #191919;
+    border: rgba(203,203,203,.3) thin;
+}
+
+.handles-parent {
+    overflow-y: scroll;
+    height: 75vh;
+    margin: 0 auto;
+    display: inline-block;
+    padding: 0px 50px 0px 50px;
+    width: 100%;
+    transform: perspective(1px) translateY(12.5vh); /* 12.5*2 for top/bottom, adds up with 75vh to equal 100% height*/
+}
+
+.handles th {
+    text-align: left;
+}
+
+#handlesForm {
+    margin: 0 auto;
+    width: 100%;
+    transform: perspective(1px) translateY(50vh);
+}
+
+#handlesForm li {
+    color: #DE614B;
+    list-style: none;
+}
+
+#handlesForm ul {
+    padding: 0;
 }
 
 .card-columns {

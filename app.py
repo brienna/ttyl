@@ -17,8 +17,8 @@ def show_handles():
     # Get handles from db and show to user
     cmd1 = 'SELECT ROWID, id, service FROM handle'
     c.execute(cmd1)
-    deleted_msg = pd.DataFrame(c.fetchall(), columns=['ROWID', 'id', 'service']).sort_values(by='ROWID').set_index('ROWID')
-    return render_template('view.html',tables=[deleted_msg.to_html(classes="handles")])
+    deleted_msg = pd.DataFrame(c.fetchall(), columns=['ROWID', 'id', 'service']).sort_values(by='id').rename(columns={"ROWID": "ID", "id": "CONTACT", "service": "SERVICE"})
+    return render_template('view.html',tables=[deleted_msg.to_html(classes="handles table table-dark", index=False)])
 
 
 

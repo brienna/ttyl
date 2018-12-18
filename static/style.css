@@ -21,18 +21,15 @@ tr:hover {
     cursor: pointer;
     color: #262626;
 }
-
 tr.selected {
     background-color: #DE614B;
     color: #262626;
 }
-
 .handles {
     color: rgba(203,203,203,.3);
     background-color: #191919;
     border: rgba(203,203,203,.3) thin;
 }
-
 .handles-parent {
     overflow-y: scroll;
     height: 75vh;
@@ -42,31 +39,45 @@ tr.selected {
     width: 100%;
     transform: perspective(1px) translateY(12.5vh); /* 12.5*2 for top/bottom, adds up with 75vh to equal 100% height*/
 }
-
 .handles th {
     text-align: left;
 }
-
 #handlesForm {
     margin: 0 auto;
     width: 100%;
     transform: perspective(1px) translateY(50vh);
 }
-
 #handlesForm li {
     color: #DE614B;
     list-style: none;
 }
-
 #handlesForm ul {
     padding: 0;
 }
 
-.card-columns {
-  @include media-breakpoint-only(lg) {
+.card-columns@include media-breakpoint-only(lg) {
     column-count: 4;
-  }
-  @include media-breakpoint-only(xl) {
+}
+.card-columns@include media-breakpoint-only(xl) {
     column-count: 5;
-  }
+}
+.card-columns {
+    padding: 20px;
+}
+.card img {
+    width: 100%;
+}
+.card {
+    background-color: #262626;
+    border: thin solid #595959;
+    padding: 10px;
+}
+.card:nth-child(n+1) {
+    color: #DE614B;
+}
+.card:nth-child(n+2) {
+    color: #FFFE7B;
+}
+.card:nth-child(n+3) {
+    color: #88CC5C;
 }

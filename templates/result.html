@@ -21,16 +21,21 @@
         <!-- Most active day -->
         <div class="card">
             <p>
-                <span>Day: {{ most_active_day[0] }}</span>
-                <span>Num sent: {{ most_active_day[1] }}</span>
-                <span>By me: {{ most_active_day[2] }}</span>
-                <span>By them: {{ most_active_day[3] }}</span>
+                <span>most active on</span> <span class="">{{ most_active_day[0] }}</span><br />
+                <span>I sent</span> <span>{{ most_active_day[2] }} messages</span>
+                <span>He sent</span> <span>{{ most_active_day[3] }} messages</span>
+                <span>totaling</span> <span>{{ most_active_day[1] }}</span>
             </p>
         </div>
 
         <!-- Spider plot of day average activity -->
         <div class="card">
             <img src="{{ spider_plot_url }}" />
+        </div>
+
+        <!-- Line plot of summarized weekly activity -->
+        <div class="card">
+            <img src="{{ line_plot_url }}" />
         </div>
 
     </div>

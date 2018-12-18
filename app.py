@@ -1,11 +1,12 @@
 
 from flask import Flask, render_template, request
 import sqlite3, pandas as pd, json, datetime, matplotlib.pyplot as plt, math
-import matplotlib.patches as mpatches
+import matplotlib.patches as mpatches, matplotlib.dates as mdates
 
 CHAT_DB_PATH = '/Users/Brienna/Library/Messages/chat.db'
 # IMAGES
 SPIDER_PLOT_PATH = '/Users/Brienna/Documents/GitHub repositories/we-text-a-lot/static/img/spider_plot.png'
+LINE_PLOT_PATH = '/Users/Brienna/Documents/GitHub repositories/we-text-a-lot/static/img/line_plot.png'
 
 we_texted_a_lot = Flask(__name__)
 
@@ -62,15 +63,18 @@ def get_messages():
     most_active_day = get_most_active_day(df_msg)
     # Show spider plot of average day activity
     get_spider_plot(df_msg)
+    # Show line plot of summarized weekly activity over entire length of conversation
+    get_line_plot(df_msg)
 
     return render_template('result.html', 
         duration=duration, 
         num_messages=num_messages,
         most_active_day=most_active_day,
-        spider_plot_url = '/static/img/spider_plot.png') # change relative/dir paths later
+        spider_plot_url = '/static/img/spider_plot.png', # change relative/dir paths later
+        line_plot_url = '/static/img/line_plot.png')
 
 
-# Functions
+# Functions (maybe put in separate python file)
 
 def get_duration(df_msg):
     '''
@@ -151,7 +155,30 @@ def get_spider_plot(df_msg):
     red_patch = mpatches.Patch(color=(222/255, 97/255, 75/255), label='Him',alpha=0.4)
     blue_patch = mpatches.Patch(color=(255/255, 254/255, 123/255), label='Me',alpha=0.4)
     plt.legend(handles=[red_patch, blue_patch],loc='upper right', bbox_to_anchor=(0.1,0.1))
-    plt.savefig(SPIDER_PLOT_PATH)
+    plt.savefig(SPIDER_PLOT_PATH, transparent=True, bbox_inches='tight')
+
+def get_line_plot(df_msg):
+    messages_week = df_msg.set_index('time').resample('W-MON')['text'].count()
+    fig, ax = plt.subplots()
+    fig.set_size_inches(10, 10)
+    plt.plot(messages_week, label='messages', color='pink') # the 200 is where on y axis the arrow points to
+
+    fig.suptitle('Weekly message overview', fontsize=20)
+    plt.xlabel('Weeks', fontsize=18)
+    plt.ylabel('Messages', fontsize=18)
+    plt.annotate('Ireland', (mdates.date2num(datetime.datetime(2018, 3, 15)), 200), xytext=(-100,0), 
+            textcoords='offset points', size=20,
+            va='center', ha='center',
+            arrowprops=dict(arrowstyle="->",
+                           connectionstyle='arc3, rad=-0.2',
+                           lw=2),
+            )
+    plt.annotate('Bri in DC', (mdates.date2num(datetime.datetime(2018, 8, 28)), 205), xytext=(50, -50),
+            textcoords='offset points', size=20,
+            va='center', ha='center',
+            arrowprops=dict(arrowstyle="->", lw=2))
+
+    plt.savefig(LINE_PLOT_PATH, transparent=True, bbox_inches='tight')
 
 if __name__ == '__main__':
     we_texted_a_lot.run(debug=True)
